@@ -1,47 +1,59 @@
 import React from "react";
-
-// New school react
-import { useCount, useDocumentTitle, useFormInput, useWindowResolution } from './hooks/index';
+import { useFetchData } from '../../utils/index';
+import { useTabController } from './hooks';
+import { LoadingSpinner } from '../../shared';
 
 function Tabs() {
-  const name = useFormInput("Blah Blah");
-  const location = useFormInput("Hello World");
-  const count = useCount(0, 1);
-  const resolution = useWindowResolution();
-
-  useDocumentTitle(name.value + " from " + location.value);
+  const data = useFetchData('static/data.json');
+  const haveData = !!data;
+  const tabController = useTabController(0); // set default to the first tab
 
   return (
     <>
-      <h3 className="home-title">
-        HELLO WORLD@#$%
-      </h3>
-      <p>Here is some tests using hooks</p>
-      <section>
-        <form autoComplete="off">
-          <section>
-            <label htmlFor="name">Name</label>
-            {/* <input {...name} /> */}
-            <input value={name.value} onChange={name.onChange}/>
-          </section>
-          <section>
-            <label htmlFor="location">Location</label>
-            {/* <input value={...location} /> */}
-            <input value={location.value} onChange={location.onChange} />
-          </section>
-        </form>
-      </section>
-      <section>
-        {/* <button onClick={ count.onClick }> */}
-        <button { ...count }>
-          Click me
-        </button>
-      </section>
-      <section>
-        <p>
-          Hello {name.value} from {location.value}. You clicked the magic button {count.value} times. Screen resolution is {resolution.width} x {resolution.height}.
-        </p>
-      </section>
+      { 
+        /* 
+          **TODO** Need to figure out exporting templates with Hooks
+        */
+
+        !!haveData ? 
+        <section className="tabs">
+          <div className="grid grid--col-four tabs__tabs">
+            { data.map( (e,i) => {
+                return (
+                  <h4 
+                    key={"tabs-title" + i} 
+                    id={"tabs-title-" + i}
+                    className={`button tabs__title ${i === tabController.currentTab ? 'active' : ''}`} 
+                    data-tab-key={i} 
+                    data-tab-elem="desktop-tab"
+                    onClick={tabController.onClick}
+                  >
+                      {e.title}
+                  </h4>
+                )
+              })}
+          </div>
+          <div className="tabs__body-container">
+            { data.map( (e,i) => {
+                return (
+                  <div
+                    key={"tabs-body-row-" + i} 
+                    id={"tabs-body-" + i} 
+                    className={`tabs__body ${i === tabController.currentTab ? 'active' : ''}`} 
+                    data-tab-key={i}
+                    data-tab-elem="body-tab"
+                    onClick={tabController.onClick}
+                  >
+                    <h5 className="tabs__body-title">{e.title}</h5>
+                    <div className="tabs__body-content" dangerouslySetInnerHTML={{__html: e.content}} />
+                  </div>
+                )
+            })}
+          </div>
+        </section>
+        :
+        <LoadingSpinner />
+      }
     </>
   );
 }

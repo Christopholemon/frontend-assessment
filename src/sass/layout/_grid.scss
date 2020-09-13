@@ -9,7 +9,8 @@
 .grid--col {
   row-gap: 2rem;
 
-  &-three {
+  &-three,
+  &-four {
     grid-template-columns: 1fr;
   }
 }
@@ -21,6 +22,10 @@
 
     &-three {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    &-four {
+      grid-template-columns: repeat(4, 1fr);
     }
   }
 }

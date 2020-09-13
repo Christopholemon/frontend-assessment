@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Tabs from './components';
+import { default as App } from './components';
 
-setTimeout(
-  () => {
-    ReactDOM.render(
-      <Tabs />,
-      document.getElementById('tabs')
-    )
-  },
-  2000
-);
+ReactDOM.render(
+  <App />,
+  document.getElementById('tabs')
+)

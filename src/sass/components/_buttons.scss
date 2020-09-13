@@ -30,8 +30,15 @@
   &:focus{
     outline: 1px dotted $gray;
   }
+}
 
-  &:active{
-    background-color: $color-primary;
+.button--inverse {
+  background-color: $black;
+  color: $white;
+
+  &:focus,
+  &:hover {
+    background: $white;
+    color: $black;
   }
 }
