@@ -3,12 +3,15 @@
 // -----------------------------------------------------------------------------
 
 // Breakpoints
-$bp-larger-than-mobile    : "min-width: 600px" !default;
+$bp-tiny   : "max-width: 299px" !default;
+$bp-tablet   : "min-width: 650px" !default;
+$bp-desktop   : "min-width: 1000px" !default;
 
 //Globals
 $line-height:            2.4rem !default;
-$global-radius:          1rem !default;
+$global-radius:          0.5rem !default;
 $button-radius:          10rem !default;
+$spacing-default:                2rem !default;
 
 // Font variables
 $font-sans-serif: "Roboto", Helvetica, Arial, sans-serif !default;
